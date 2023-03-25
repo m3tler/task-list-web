@@ -1,0 +1,9 @@
+<div style="padding: 24px;">
+    <h1 mat-dialog-title style="padding: 0px;">Czy chcesz usunąć zaznaczone zadania?</h1>
+    <div mat-dialog-actions style="padding: 0px;">
+        <section>
+            <button mat-raised-button color="primary" mat-dialog-close>Cofnij</button>
+            <button mat-raised-button color="primary" mat-dialog-close (click)="deleteSelectedTasks()">Usuń</button>
+        </section>
+    </div>
+</div>

@@ -15,13 +15,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskComponent } from './home/add-task/add-task.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { DeleteTasksComponent } from './home/delete-tasks/delete-tasks.component';
+import { EditTaskComponent } from './home/edit-task/edit-task.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    DeleteTasksComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +42,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
