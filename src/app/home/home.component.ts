@@ -31,7 +31,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
   sort: MatSort = new MatSort;
 
   ngOnInit(): void {
-    this.tasks$ = this.refreshTasks$.pipe(switchMap(_ => this.homeService.getTasks()));
+    //this.tasks$ = this.refreshTasks$.pipe(switchMap(_ => this.homeService.getTasks()));
   }
 
   ngAfterViewInit() {
@@ -50,6 +50,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.refreshTasks$.next(true);
   }
 
+  isTerminate(date: Date) {
+    return new Date(date).getTime() < Date.now();
+  }
+
   tabChanged(event: any) {
     switch(event.tab.textLabel) {
       case "Wszystkie": {
@@ -64,13 +68,13 @@ export class HomeComponent implements AfterViewInit, OnInit {
       }
       case "Oczekujące": {
         this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-          return new Date(task.deadline) > new Date();
+          return new Date(task.deadline) > new Date() && task.done == false;
         }));
         break;
       }
       case "Przeterminowane": {
         this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-          return new Date(task.deadline) < new Date();
+          return new Date(task.deadline) < new Date() && task.done == false;
         }));
         break;
       }

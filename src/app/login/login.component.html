@@ -1,1 +1,16 @@
-<p>Login page</p>
+<div style="padding: 24px; height: 600px; width: 300px;">
+    <h1 style="padding: 0px;">Logowanie</h1>
+    <div style="display: flex; flex-direction: column;">
+        <mat-form-field>
+            <mat-label>Login</mat-label>
+            <input [(ngModel)]="username" matInput placeholder="Wpisz login">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Hasło</mat-label>
+            <input [(ngModel)]="password" matInput type="password" placeholder="Wpisz hasło">
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary" (click)="handleLogin()">Zaloguj</button>
+    </div>
+</div>
