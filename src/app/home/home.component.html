@@ -1,4 +1,4 @@
-<mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChanged($event)">
+<mat-tab-group #tabGroup animationDuration="0ms" (selectedTabChange)="applyFilter($event)">
     <mat-tab label="Wszystkie"></mat-tab>
     <mat-tab label="Wykonane"></mat-tab>
     <mat-tab label="Oczekujące"></mat-tab>

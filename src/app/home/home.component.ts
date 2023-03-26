@@ -6,17 +6,18 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { HomeService } from './home.service';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { DeleteTasksComponent } from './delete-tasks/delete-tasks.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit, OnInit {
-  dataSource = new MatTableDataSource();
+export class HomeComponent implements AfterViewInit {
+  dataSource = new MatTableDataSource<Task>();
   tasks$: Observable<Task[]>;
   refreshTasks$ = new BehaviorSubject<boolean>(true);
   selectedItems: number[] = [];
@@ -30,12 +31,9 @@ export class HomeComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
 
-  ngOnInit(): void {
-    //this.tasks$ = this.refreshTasks$.pipe(switchMap(_ => this.homeService.getTasks()));
-  }
-
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = this.customFilter();
   }
 
   announceSortChange(sortState: Sort) {
@@ -54,31 +52,70 @@ export class HomeComponent implements AfterViewInit, OnInit {
     return new Date(date).getTime() < Date.now();
   }
 
-  tabChanged(event: any) {
-    switch(event.tab.textLabel) {
-      case "Wszystkie": {
-        this.tasks$.subscribe(tasks => this.dataSource.data = tasks);
+  applyFilter(event: any) {
+    this.dataSource.filterPredicate = this.customFilter();
+  }
+
+  @ViewChild('tabGroup')
+  tabGroup!: MatTabGroup;
+  customFilter(): (data: Task, filter: string) => boolean {
+    console.log(this.tabGroup.selectedIndex)
+    let filterFunction = (data: Task, filter: string) => { return true };;
+    switch(this.tabGroup.selectedIndex) {
+      case 0: {
+        //this.tasks$.subscribe(tasks => this.dataSource.data = tasks);
+        filterFunction = (data: Task, filter: string) => { return true };
         break;
       }
-      case "Wykonane": {
-        this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-          return task.done === true;
-        }));
+      case 1: {
+        // this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
+        //   return task.done === true;
+        // }));
+        filterFunction = (data: Task, filter: string) => { return data.done === true };
         break;
       }
-      case "Oczekujące": {
-        this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-          return new Date(task.deadline) > new Date() && task.done == false;
-        }));
+      case 2: {
+        // this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
+        //   return new Date(task.deadline) > new Date() && task.done == false;
+        // }));
+        filterFunction = (data: Task, filter: string) => { return new Date(data.deadline) > new Date() && data.done == false; };
         break;
       }
-      case "Przeterminowane": {
-        this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-          return new Date(task.deadline) < new Date() && task.done == false;
-        }));
+      case 3: {
+        // this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
+        //   return new Date(task.deadline) < new Date() && task.done == false;
+        // }));
+        filterFunction = (data: Task, filter: string) => { return new Date(data.deadline) < new Date() && data.done == false; };
         break;
       }
     }
+    return filterFunction;
+
+  // tabChanged(event: any) {
+  //   switch(event.tab.textLabel) {
+  //     case "Wszystkie": {
+  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks);
+  //       break;
+  //     }
+  //     case "Wykonane": {
+  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
+  //         return task.done === true;
+  //       }));
+  //       break;
+  //     }
+  //     case "Oczekujące": {
+  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
+  //         return new Date(task.deadline) > new Date() && task.done == false;
+  //       }));
+  //       break;
+  //     }
+  //     case "Przeterminowane": {
+  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
+  //         return new Date(task.deadline) < new Date() && task.done == false;
+  //       }));
+  //       break;
+  //     }
+  //   }
   }
 
   addTask(): void {
