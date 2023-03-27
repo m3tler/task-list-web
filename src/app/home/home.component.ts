@@ -60,7 +60,7 @@ export class HomeComponent implements AfterViewInit {
     return (data: Task, filter: string) => {
       switch (filter) {
         case "Wykonane": {
-          return data.done === true;
+          return data.done == true;
         }
         case "Oczekujące": {
           return new Date(data.deadline) > new Date() && data.done == false;
@@ -83,7 +83,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   deleteSelectedTasks(): void {
-    if (this.selectedItems.length === 0) return;
+    if (this.selectedItems.length == 0) return;
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -92,6 +92,7 @@ export class HomeComponent implements AfterViewInit {
 
     let dialogRef = this.dialog.open(DeleteTasksComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.update())
+    console.log(this.selectedItems);
   }
 
   editTask(task: Task): void {

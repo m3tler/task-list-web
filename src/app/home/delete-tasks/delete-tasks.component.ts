@@ -13,5 +13,6 @@ export class DeleteTasksComponent {
 
   deleteSelectedTasks() {
     this.homeService.deleteTasks(this.data).subscribe();
+    this.data.length = 0;
   }
 }
