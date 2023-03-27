@@ -20,6 +20,8 @@ import { DeleteTasksComponent } from './home/delete-tasks/delete-tasks.component
 import { EditTaskComponent } from './home/edit-task/edit-task.component';
 import { DatePipe } from '@angular/common';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { LogoutComponent } from './logout/logout.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     HomeComponent,
     AddTaskComponent,
     DeleteTasksComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatToolbarModule
   ],
   providers: [DatePipe,
     {
