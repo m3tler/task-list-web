@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { MatSortModule } from '@angular/material/sort';
@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DeleteTasksComponent } from './home/delete-tasks/delete-tasks.component';
 import { EditTaskComponent } from './home/edit-task/edit-task.component';
 import { DatePipe } from '@angular/common';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,12 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
