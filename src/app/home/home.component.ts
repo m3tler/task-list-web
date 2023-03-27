@@ -9,7 +9,6 @@ import { HomeService } from './home.service';
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { DeleteTasksComponent } from './delete-tasks/delete-tasks.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
-import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-home',
@@ -53,69 +52,28 @@ export class HomeComponent implements AfterViewInit {
   }
 
   applyFilter(event: any) {
-    this.dataSource.filterPredicate = this.customFilter();
+    let filterValue = event.tab.textLabel;
+    this.dataSource.filter = filterValue;
   }
 
-  @ViewChild('tabGroup')
-  tabGroup!: MatTabGroup;
   customFilter(): (data: Task, filter: string) => boolean {
-    console.log(this.tabGroup.selectedIndex)
-    let filterFunction = (data: Task, filter: string) => { return true };;
-    switch(this.tabGroup.selectedIndex) {
-      case 0: {
-        //this.tasks$.subscribe(tasks => this.dataSource.data = tasks);
-        filterFunction = (data: Task, filter: string) => { return true };
-        break;
-      }
-      case 1: {
-        // this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-        //   return task.done === true;
-        // }));
-        filterFunction = (data: Task, filter: string) => { return data.done === true };
-        break;
-      }
-      case 2: {
-        // this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-        //   return new Date(task.deadline) > new Date() && task.done == false;
-        // }));
-        filterFunction = (data: Task, filter: string) => { return new Date(data.deadline) > new Date() && data.done == false; };
-        break;
-      }
-      case 3: {
-        // this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-        //   return new Date(task.deadline) < new Date() && task.done == false;
-        // }));
-        filterFunction = (data: Task, filter: string) => { return new Date(data.deadline) < new Date() && data.done == false; };
-        break;
+    return (data: Task, filter: string) => {
+      switch (filter) {
+        case "Wszystkie": {
+          return true;
+        }
+        case "Wykonane": {
+          return data.done === true;
+        }
+        case "Oczekujące": {
+          return new Date(data.deadline) > new Date() && data.done == false;
+        }
+        case "Przeterminowane": {
+          return new Date(data.deadline) < new Date() && data.done == false;
+        }
+        default: { return true; }
       }
     }
-    return filterFunction;
-
-  // tabChanged(event: any) {
-  //   switch(event.tab.textLabel) {
-  //     case "Wszystkie": {
-  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks);
-  //       break;
-  //     }
-  //     case "Wykonane": {
-  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-  //         return task.done === true;
-  //       }));
-  //       break;
-  //     }
-  //     case "Oczekujące": {
-  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-  //         return new Date(task.deadline) > new Date() && task.done == false;
-  //       }));
-  //       break;
-  //     }
-  //     case "Przeterminowane": {
-  //       this.tasks$.subscribe(tasks => this.dataSource.data = tasks.filter((task: any) => {
-  //         return new Date(task.deadline) < new Date() && task.done == false;
-  //       }));
-  //       break;
-  //     }
-  //   }
   }
 
   addTask(): void {
