@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { HomeService } from '../home.service';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-task',
@@ -10,7 +10,7 @@ import { DatePipe, formatDate } from '@angular/common';
 export class AddTaskComponent {
   name: string = '';
   done: boolean = false;
-  deadline: any; 
+  deadline: any;
 
   constructor(private homeService: HomeService, private datePipe: DatePipe) {
     this.deadline = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm");

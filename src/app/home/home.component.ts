@@ -1,12 +1,12 @@
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { HomeService } from './home.service';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { DeleteTasksComponent } from './delete-tasks/delete-tasks.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
 
@@ -22,7 +22,7 @@ export class HomeComponent implements AfterViewInit {
   selectedItems: number[] = [];
   displayedColumns: string[] = ['buttons', 'name', 'done', 'deadline'];
 
-  constructor(private http: HttpClient, private _liveAnnouncer: LiveAnnouncer,public dialog: MatDialog, private homeService: HomeService) {
+  constructor(private http: HttpClient, private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog, private homeService: HomeService) {
     this.tasks$ = this.refreshTasks$.pipe(switchMap(_ => this.homeService.getTasks()));
     this.tasks$.subscribe(tasks => this.dataSource.data = tasks);
   }
@@ -59,9 +59,6 @@ export class HomeComponent implements AfterViewInit {
   customFilter(): (data: Task, filter: string) => boolean {
     return (data: Task, filter: string) => {
       switch (filter) {
-        case "Wszystkie": {
-          return true;
-        }
         case "Wykonane": {
           return data.done === true;
         }
@@ -86,7 +83,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   deleteSelectedTasks(): void {
-    if(this.selectedItems.length === 0) return;
+    if (this.selectedItems.length === 0) return;
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -97,7 +94,7 @@ export class HomeComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(() => this.update())
   }
 
-  editTask(task: Task) : void {
+  editTask(task: Task): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
@@ -107,12 +104,12 @@ export class HomeComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(() => this.update());
   }
 
-  setDone(task: Task) : void {
+  setDone(task: Task): void {
     this.homeService.editTask(task).subscribe();
   }
 
   changeSelection(id: number) {
-    if(this.selectedItems.includes(id)) this.selectedItems.splice(this.selectedItems.indexOf(id), 1);
+    if (this.selectedItems.includes(id)) this.selectedItems.splice(this.selectedItems.indexOf(id), 1);
     else this.selectedItems.push(id);
   }
 }

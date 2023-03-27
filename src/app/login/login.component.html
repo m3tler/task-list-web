@@ -3,11 +3,13 @@
     <div style="display: flex; flex-direction: column;">
         <mat-form-field>
             <mat-label>Login</mat-label>
-            <input [(ngModel)]="username" matInput placeholder="Wpisz login">
+            <input [(ngModel)]="username" matInput placeholder="Wpisz login" (keydown.enter)="handleLogin()" required
+                minlength="1">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Hasło</mat-label>
-            <input [(ngModel)]="password" matInput type="password" placeholder="Wpisz hasło">
+            <input [(ngModel)]="password" matInput type="password" placeholder="Wpisz hasło"
+                (keydown.enter)="handleLogin()" required minlength="1">
         </mat-form-field>
     </div>
     <div>

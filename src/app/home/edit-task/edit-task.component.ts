@@ -1,6 +1,6 @@
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HomeService } from '../home.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../home.component';
 import { DatePipe, formatDate } from '@angular/common';
 

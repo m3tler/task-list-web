@@ -15,7 +15,7 @@ export class LoginComponent {
   invalidLogin = false;
   loginSuccess = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   handleLogin() {
     this.authService.authenticationService(this.username, this.password).subscribe(result => {

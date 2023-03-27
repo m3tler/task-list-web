@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DeleteTasksComponent {
 
-  constructor(private homeService: HomeService, @Inject(MAT_DIALOG_DATA) public data: number[]) {}
+  constructor(private homeService: HomeService, @Inject(MAT_DIALOG_DATA) public data: number[]) { }
 
   deleteSelectedTasks() {
     this.homeService.deleteTasks(this.data).subscribe();
