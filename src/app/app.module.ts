@@ -22,6 +22,8 @@ import { DatePipe } from '@angular/common';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LogoutComponent } from './logout/logout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [DatePipe,
     {

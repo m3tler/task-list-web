@@ -9,6 +9,8 @@ import { HomeService } from './home.service';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { DeleteTasksComponent } from './delete-tasks/delete-tasks.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { FormGroup, FormControl } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +23,15 @@ export class HomeComponent implements AfterViewInit {
   refreshTasks$ = new BehaviorSubject<boolean>(true);
   selectedItems: number[] = [];
   displayedColumns: string[] = ['buttons', 'name', 'done', 'deadline'];
+  searchName: string = '';
+  searchStartDate: Date | undefined;
+  searchEndDate: Date | undefined
+  selectedTabLabel: string = 'Wszystkie';
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   constructor(private http: HttpClient, private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog, private homeService: HomeService) {
     this.tasks$ = this.refreshTasks$.pipe(switchMap(_ => this.homeService.getTasks()));
@@ -52,24 +63,37 @@ export class HomeComponent implements AfterViewInit {
   }
 
   applyFilter(event: any) {
-    let filterValue = event.tab.textLabel;
+    if(event instanceof MatTabChangeEvent) {
+      this.selectedTabLabel = event.tab.textLabel;
+    }
+    let filterValue = this.selectedTabLabel;
     this.dataSource.filter = filterValue;
   }
 
   customFilter(): (data: Task, filter: string) => boolean {
-    return (data: Task, filter: string) => {
+    return (data: Task, filter: string) => {  
+      let searching: boolean = data.name.toLowerCase().includes(this.searchName.toLowerCase());
+      if(this.searchStartDate != undefined && this.searchEndDate != undefined) {  
+        searching = searching && new Date(data.deadline) >= new Date(this.searchStartDate) && new Date(data.deadline) <= new Date(this.searchEndDate);
+      }
+      console.log(this.searchStartDate)
+      let filtering: boolean = true;
       switch (filter) {
         case "Wykonane": {
-          return data.done == true;
+          filtering = data.done == true;
+          break;
         }
         case "Oczekujące": {
-          return new Date(data.deadline) > new Date() && data.done == false;
+          filtering = new Date(data.deadline) > new Date() && data.done == false;
+          break;
         }
         case "Przeterminowane": {
-          return new Date(data.deadline) < new Date() && data.done == false;
+          filtering = new Date(data.deadline) < new Date() && data.done == false;
+          break;
         }
-        default: { return true; }
+        default: { filtering = true }
       }
+      return searching && filtering;
     }
   }
 
@@ -112,6 +136,12 @@ export class HomeComponent implements AfterViewInit {
   changeSelection(id: number) {
     if (this.selectedItems.includes(id)) this.selectedItems.splice(this.selectedItems.indexOf(id), 1);
     else this.selectedItems.push(id);
+  }
+
+  clearFilters() {
+    this.searchName = '';
+    this.searchStartDate = undefined;
+    this.searchEndDate = undefined;
   }
 }
 
