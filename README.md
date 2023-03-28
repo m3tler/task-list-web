@@ -1,27 +1,26 @@
-# TaskListWeb
+# Task list - core app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Set up](#set-up)
 
-## Development server
+## General info
+This application is a frontend site of the task list project. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Technologies
+Project is created with:
+* Angular: 14
 
-## Code scaffolding
+## Set up
+This section shows how to set up and install the application on the Tomcat server.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To set up the application follow these steps:
+1. Clone the application using ```git clone https://github.com/m3tler/task-list-core.git```
+2. Install npm using ```npm install``` command.
+3. Build the application using ```ng build --base-href=/angular/``` command.
+4. Copy content of the .dist folder.
+5. Paste it to the ./webapps folder in the Tomcat container.
+6. Rename pasted folder to the "angular".
+7. Move to the ./bin folder and open command prompt.
+8. Run the application using Tomcat.exe file.
