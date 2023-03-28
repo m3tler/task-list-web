@@ -16,6 +16,8 @@ Project is created with:
 ## Set up
 This section shows how to set up and install the application on the Tomcat server.
 
+Important: Before the app installation on the Tomcat server make sure you have Node.js installed.
+
 To set up the application follow these steps:
 1. Clone the application using ```git clone https://github.com/m3tler/task-list-web.git```
 2. Install npm using ```npm install``` command.
