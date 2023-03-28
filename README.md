@@ -16,11 +16,11 @@ Project is created with:
 This section shows how to set up and install the application on the Tomcat server.
 
 To set up the application follow these steps:
-1. Clone the application using ```git clone https://github.com/m3tler/task-list-core.git```
+1. Clone the application using ```git clone https://github.com/m3tler/task-list-web.git```
 2. Install npm using ```npm install``` command.
 3. Build the application using ```ng build --base-href=/angular/``` command.
 4. Copy content of the .dist folder.
 5. Paste it to the ./webapps folder in the Tomcat container.
-6. Rename pasted folder to the "angular".
-7. Move to the ./bin folder and open command prompt.
+6. Rename pasted folder to "angular".
+7. Move to the ./bin folder.
 8. Run the application using Tomcat.exe file.
