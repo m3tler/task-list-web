@@ -24,6 +24,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatToolbarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule
   ],
   providers: [DatePipe,
     {

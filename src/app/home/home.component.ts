@@ -25,7 +25,9 @@ export class HomeComponent implements AfterViewInit {
   displayedColumns: string[] = ['buttons', 'name', 'done', 'deadline'];
   searchName: string = '';
   searchStartDate: Date | undefined;
-  searchEndDate: Date | undefined
+  searchEndDate: Date | undefined;
+  searchDone: boolean = false;
+  searchTodo: boolean = false;
   selectedTabLabel: string = 'Wszystkie';
 
   range = new FormGroup({
@@ -63,7 +65,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   applyFilter(event: any) {
-    if(event instanceof MatTabChangeEvent) {
+    if (event instanceof MatTabChangeEvent) {
       this.selectedTabLabel = event.tab.textLabel;
     }
     let filterValue = this.selectedTabLabel;
@@ -71,12 +73,18 @@ export class HomeComponent implements AfterViewInit {
   }
 
   customFilter(): (data: Task, filter: string) => boolean {
-    return (data: Task, filter: string) => {  
+    return (data: Task, filter: string) => {
       let searching: boolean = data.name.toLowerCase().includes(this.searchName.toLowerCase());
-      if(this.searchStartDate != undefined && this.searchEndDate != undefined) {  
+      if (this.searchStartDate != undefined && this.searchEndDate != undefined) {
         searching = searching && new Date(data.deadline) >= new Date(this.searchStartDate) && new Date(data.deadline) <= new Date(this.searchEndDate);
       }
-      console.log(this.searchStartDate)
+      if (this.searchDone && !this.searchTodo) {
+        searching = searching && data.done == true;
+      }
+      else if (!this.searchDone && this.searchTodo) {
+        searching = searching && data.done == false;
+      }
+
       let filtering: boolean = true;
       switch (filter) {
         case "Wykonane": {
@@ -142,6 +150,23 @@ export class HomeComponent implements AfterViewInit {
     this.searchName = '';
     this.searchStartDate = undefined;
     this.searchEndDate = undefined;
+    this.searchDone = true;
+    this.searchTodo = true;
+    this.applyFilter(null);
+  }
+
+  changeDone() {
+    if (this.searchDone == false) {
+      this.searchTodo = true;
+    }
+    this.applyFilter(null);
+  }
+
+  changeTodo() {
+    if (this.searchTodo == false) {
+      this.searchDone = true;
+    }
+    this.applyFilter(null);
   }
 }
 

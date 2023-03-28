@@ -16,22 +16,33 @@
 <div style="display: flex; flex-direction: row;">
     <form style="padding-left: 8px;" class="example-form">
         <mat-form-field class="example-full-width">
-            <input [(ngModel)]="searchName" [ngModelOptions]="{standalone: true}" type="search" matInput placeholder="Nazwa" (ngModelChange)="applyFilter($event)">
+            <input [(ngModel)]="searchName" [ngModelOptions]="{standalone: true}" type="search" matInput
+                placeholder="Nazwa" (ngModelChange)="applyFilter($event)">
         </mat-form-field>
     </form>
-    <mat-form-field style="padding-left: 8px; padding-right: 16px;" appearance="fill">
+    <div style="margin-top: auto; margin-bottom: 22px;">
+        <mat-checkbox [(ngModel)]="searchDone" [ngModelOptions]="{standalone: true}" color="primary"
+            (change)="changeDone()">Wykonane</mat-checkbox>
+        <mat-checkbox style="padding-right: 16px;" [(ngModel)]="searchTodo" [ngModelOptions]="{standalone: true}"
+            color="primary" (change)="changeTodo()">Do zrobienia</mat-checkbox>
+    </div>
+    <mat-form-field style="padding-right: 16px;" appearance="fill">
         <mat-label>Podaj zakres</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-            <input [(ngModel)]="searchStartDate" matStartDate formControlName="start" placeholder="MM/DD/YYYY" (ngModelChange)="applyFilter($event)">
-            <input [(ngModel)]="searchEndDate" matEndDate formControlName="end" placeholder="MM/DD/YYYY" (ngModelChange)="applyFilter($event)">
+            <input [(ngModel)]="searchStartDate" matStartDate formControlName="start" placeholder="MM/DD/YYYY"
+                (ngModelChange)="applyFilter($event)">
+            <input [(ngModel)]="searchEndDate" matEndDate formControlName="end" placeholder="MM/DD/YYYY"
+                (ngModelChange)="applyFilter($event)">
         </mat-date-range-input>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
 
-        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Nieprawidłowa data początkowa</mat-error>
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Nieprawidłowa data
+            początkowa</mat-error>
         <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Nieprawidłowa data końcowa</mat-error>
     </mat-form-field>
-    <button style="margin-top: auto; margin-bottom: 22px;" mat-stroked-button color="primary" (click)="clearFilters()">Wyczyść filtry</button>
+    <button style="margin-top: auto; margin-bottom: 22px;" mat-stroked-button color="primary"
+        (click)="clearFilters()">Wyczyść filtry</button>
 </div>
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
