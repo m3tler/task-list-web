@@ -23,5 +23,5 @@ To set up the application follow these steps:
 4. Copy content of the .dist folder.
 5. Paste it to the ./webapps folder in the Tomcat container.
 6. Rename pasted folder to "angular".
-7. Move to the ./bin folder.
+7. Go to the ./bin folder.
 8. Run the application using Tomcat.exe file.
