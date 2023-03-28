@@ -45,10 +45,10 @@
         (click)="clearFilters()">Wyczyść filtry</button>
 </div>
 
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-    class="mat-elevation-z8">
+<table style="width: 100%; table-layout: fixed;" mat-table [dataSource]="dataSource" matSort
+    (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
 
-    <ng-container matColumnDef="buttons" style="width: 10% !important;">
+    <ng-container matColumnDef="buttons">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
             <mat-checkbox [checked]="this.selectedItems.includes(element.id)" class="example-margin" color="primary"
@@ -58,7 +58,7 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name" style="width: 40% !important;">
+    <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
             Zadanie
         </th>
@@ -67,7 +67,7 @@
     </ng-container>
 
     <!-- Done Column -->
-    <ng-container matColumnDef="done" style="width: 10% !important;">
+    <ng-container matColumnDef="done">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by done">
             Wykonane
         </th>
@@ -78,7 +78,7 @@
     </ng-container>
 
     <!-- Deadline Column -->
-    <ng-container matColumnDef="deadline" style="width: 40% !important;">
+    <ng-container matColumnDef="deadline">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by deadline">
             Termin
         </th>
