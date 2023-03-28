@@ -10,7 +10,8 @@ This application is a frontend site of the task list project.
 
 ## Technologies
 Project is created with:
-* Angular: 14
+* Angular CLI: 15.2.4
+* Node: 18.15.0
 
 ## Set up
 This section shows how to set up and install the application on the Tomcat server.
