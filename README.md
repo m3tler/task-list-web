@@ -25,6 +25,8 @@ To set up the application follow these steps:
 4. Copy content of the .dist folder.
 5. Paste it to the ./webapps folder in the Tomcat container.
 6. Rename pasted folder to "angular".
+7. Go to the .conf folder and open server.xml file.
+8. Search for <Connector> tag and make sure the port property is set to 8081.
 7. Go to the ./bin folder.
 8. Run the application using Tomcat.exe file.
-9. Go to http://localhost:8080/angular/
+9. Go to http://localhost:8081/angular/
