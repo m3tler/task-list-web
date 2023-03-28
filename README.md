@@ -25,3 +25,4 @@ To set up the application follow these steps:
 6. Rename pasted folder to "angular".
 7. Go to the ./bin folder.
 8. Run the application using Tomcat.exe file.
+9. Go to http://localhost:8080/angular/
